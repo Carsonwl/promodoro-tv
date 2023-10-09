@@ -11,14 +11,70 @@ import Form from "react-bootstrap/Form";
 import ReactPlayer from "react-player/youtube";
 import VideoFrame from "./components/VideoFrame";
 
-
+// Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
 
 function App() {
   const workURL = useRef("https://www.youtube.com/watch?v=jfKfPfyJRdk");
   const [workVideo, setworkVideo] = useState([workURL.current]);
+  const [workState, setworkState] = useState({
+    pip: false,
+    playing: false,
+    controls: true,
+    light: false,
+
+    muted: false,
+    played: 0,
+    duration: 0,
+    playbackRate: 1.0,
+    volume: 1,
+    loop: false,
+    seeking: false,
+  });
 
   const funURL = useRef("https://www.youtube.com/watch?v=7KDRqBpT8NA");
   const [funVideo, setfunVideo] = useState([funURL.current]);
+  const [funState, setfunState] = useState({
+    pip: false,
+    playing: false,
+    controls: true,
+    light: false,
+
+    muted: false,
+    played: 0,
+    duration: 0,
+    playbackRate: 1.0,
+    volume: 1,
+    loop: false,
+    seeking: false,
+  });
+
+  // State for Video Player
+  const {
+    playing,
+    controls,
+    light,
+
+    muted,
+    loop,
+    playbackRate,
+    pip,
+    played,
+    seeking,
+    volume,
+  } = workState;
+
+  // Store which video is selected with Ref
+  const playerRef = useRef(null);
+
+  function handlePlayPause(target) {
+    if (target === "workVideo") {
+      setworkState({ ...state, playing: !state.playing });
+    } else if (target === "funVideo") {
+      setfunState({ ...state, playing: !state.playing });
+    } else {
+      alert("Invalid Video");
+    }
+  }
 
   function getURL(e) {
     e.preventDefault();
@@ -40,8 +96,7 @@ function App() {
   }
 
   function playVideo() {
-    console.log("Play video");
-  
+    setworkState({ ...setworkState, playing: !setworkState.playing });
   }
 
   return (
@@ -66,13 +121,27 @@ function App() {
                   variant='primary'
                   onClick={getURL}
                   data='workSubmit'
-                  className="m-2"
+                  className='m-2'
                 >
                   Submit
                 </Button>
               </FormGroup>
               <div className='videoContainer'>
-                <VideoFrame url={workVideo} />
+                <ReactPlayer
+                  ref={playerRef}
+                  width='100%'
+                  height='100%'
+                  url={workVideo}
+                  pip={pip}
+                  playing={playing}
+                  controls={false}
+                  light={light}
+                  loop={loop}
+                  playbackRate={playbackRate}
+                  volume={volume}
+                  muted={muted}
+                />
+                {/* <VideoFrame url={workVideo} /> */}
               </div>
             </div>
           </Col>
@@ -90,7 +159,7 @@ function App() {
                   variant='primary'
                   onClick={getURL}
                   data='funSubmit'
-                  className="m-2"
+                  className='m-2'
                 >
                   Submit
                 </Button>
@@ -102,7 +171,12 @@ function App() {
           </Col>
         </Row>
         <Row>
-          <Button variant="primary" onClick={playVideo} >Start a video</Button>
+          <Button
+            variant='primary'
+            onClick={playVideo}
+          >
+            Start a video
+          </Button>
         </Row>
       </Container>
     </>
