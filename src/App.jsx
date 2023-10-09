@@ -39,6 +39,11 @@ function App() {
     }
   }
 
+  function playVideo() {
+    console.log("Play video");
+  
+  }
+
   return (
     <>
       <Container fluid>
@@ -95,6 +100,9 @@ function App() {
               </div>
             </div>
           </Col>
+        </Row>
+        <Row>
+          <Button variant="primary" onClick={playVideo} >Start a video</Button>
         </Row>
       </Container>
     </>
