@@ -9,7 +9,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import ReactPlayer from "react-player/youtube";
-import VideoFrame from "./components/VideoFrame";
+import  { useTimer } from 'react-timer-hook';
 
 // Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
 
@@ -65,15 +65,57 @@ function App() {
 
   // Store which video is selected with Ref
   const playerRef = useRef(null);
+  
 
-  function handlePlayPause(target) {
-    if (target === "workVideo") {
-      setworkState({ ...state, playing: !state.playing });
-    } else if (target === "funVideo") {
-      setfunState({ ...state, playing: !state.playing });
-    } else {
-      alert("Invalid Video");
-    }
+  // Function causes errors for too many rerenders
+  // function handlePlayPause(target) {
+  //   if (target === "workVideo") {
+  //     setworkState({ ...workState, playing: !workState.playing });
+  //   } else if (target === "funVideo") {
+  //     setfunState({ ...funState, playing: !funState.playing });
+  //   } else {
+  //     alert("Invalid Video");
+  //   }
+  // }
+
+  function VidTimer({ expirytimestamp }) {
+    const {
+      totalSeconds,
+      seconds,
+      minutes,
+      hours,
+      days,
+      isRunning,
+      start,
+      pause,
+      resume,
+      restart,
+    } = useTimer({ expirytimestamp, autoStart: false});
+  
+    return (
+      <div style={{textAlign: 'center'}}>
+        <h1>react-timer-hook </h1>
+        <p>Timer Demo</p>
+        <div style={{fontSize: '100px'}}>
+          <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+        </div>
+        <p>{isRunning ? 'Running' : 'Not running'}</p>
+        <button onClick={start}>Start</button>
+        <button onClick={pause}>Pause</button>
+        <button onClick={resume}>Resume</button>
+        <button onClick={() => {
+          // Restarts to 5 minutes timer
+          const time = new Date();
+          time.setSeconds(time.getSeconds() + 100);
+          restart(time)
+        }}>Restart</button>
+      </div>
+    );
+  
+  }
+
+  function toggleVideo() {
+    // setworkState({ ...workState, playing: !workState.playing });
   }
 
   function getURL(e) {
@@ -95,9 +137,9 @@ function App() {
     }
   }
 
-  function playVideo() {
-    setworkState({ ...setworkState, playing: !setworkState.playing });
-  }
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 100);
+
 
   return (
     <>
@@ -165,7 +207,20 @@ function App() {
                 </Button>
               </FormGroup>
               <div className='videoContainer'>
-                <VideoFrame url={funVideo} />
+                <ReactPlayer
+                  ref={playerRef}
+                  width='100%'
+                  height='100%'
+                  url={funVideo}
+                  pip={pip}
+                  playing={playing}
+                  controls={false}
+                  light={light}
+                  loop={loop}
+                  playbackRate={playbackRate}
+                  volume={volume}
+                  muted={muted}
+                />
               </div>
             </div>
           </Col>
@@ -173,10 +228,11 @@ function App() {
         <Row>
           <Button
             variant='primary'
-            onClick={playVideo}
+            // onClick={handlePlayPause("workVideo")}
           >
             Start a video
           </Button>
+          <VidTimer expirytimestamp={time} />
         </Row>
       </Container>
     </>
