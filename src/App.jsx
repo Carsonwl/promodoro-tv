@@ -1,15 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import React from "react";
-import { useState } from "react";
-import { useRef } from "react";
-import { Button, FormGroup } from "react-bootstrap";
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Form from "react-bootstrap/Form";
+import React, { useState, useRef } from "react";
 import ReactPlayer from "react-player/youtube";
 import  { useTimer } from 'react-timer-hook';
+import { Button, FormGroup, Col, Container, Row, Form } from "react-bootstrap";
+
 
 // Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
 
@@ -50,18 +45,32 @@ function App() {
 
   // State for Video Player
   const {
-    playing,
-    controls,
-    light,
+    wplaying,
+    wcontrols,
+    wlight,
 
-    muted,
-    loop,
-    playbackRate,
-    pip,
-    played,
-    seeking,
-    volume,
+    wmuted,
+    wloop,
+    wplaybackRate,
+    wpip,
+    wplayed,
+    wseeking,
+    wvolume,
   } = workState;
+
+  const {
+    fplaying,
+    fcontrols,
+    flight,
+
+    fmuted,
+    floop,
+    fplaybackRate,
+    fpip,
+    fplayed,
+    fseeking,
+    fvolume,
+  } = funState;
 
   // Store which video is selected with Ref
   const playerRef = useRef(null);
@@ -90,14 +99,13 @@ function App() {
       pause,
       resume,
       restart,
-    } = useTimer({ expirytimestamp, autoStart: false});
+    } = useTimer({ expirytimestamp, autoStart: false, onExpire: () => {setworkState({ ...workState, playing: !workState.playing })}});
   
     return (
       <div style={{textAlign: 'center'}}>
-        <h1>react-timer-hook </h1>
-        <p>Timer Demo</p>
+        <p>Pomodoro Timer</p>
         <div style={{fontSize: '100px'}}>
-          <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+          <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
         </div>
         <p>{isRunning ? 'Running' : 'Not running'}</p>
         <button onClick={start}>Start</button>
@@ -106,7 +114,7 @@ function App() {
         <button onClick={() => {
           // Restarts to 5 minutes timer
           const time = new Date();
-          time.setSeconds(time.getSeconds() + 100);
+          time.setSeconds(time.getSeconds() + 10);
           restart(time)
         }}>Restart</button>
       </div>
@@ -115,7 +123,7 @@ function App() {
   }
 
   function toggleVideo() {
-    // setworkState({ ...workState, playing: !workState.playing });
+    setworkState({ ...workState, playing: !workState.playing });
   }
 
   function getURL(e) {
@@ -136,7 +144,7 @@ function App() {
       alert("Invalid Youtube URL");
     }
   }
-
+  // variables for first call to timer
   const time = new Date();
   time.setSeconds(time.getSeconds() + 100);
 
@@ -174,14 +182,14 @@ function App() {
                   width='100%'
                   height='100%'
                   url={workVideo}
-                  pip={pip}
-                  playing={playing}
+                  pip={wpip}
+                  playing={wplaying}
                   controls={false}
-                  light={light}
-                  loop={loop}
-                  playbackRate={playbackRate}
-                  volume={volume}
-                  muted={muted}
+                  light={wlight}
+                  loop={wloop}
+                  playbackRate={wplaybackRate}
+                  volume={wvolume}
+                  muted={wmuted}
                 />
                 {/* <VideoFrame url={workVideo} /> */}
               </div>
@@ -212,14 +220,14 @@ function App() {
                   width='100%'
                   height='100%'
                   url={funVideo}
-                  pip={pip}
-                  playing={playing}
+                  pip={fpip}
+                  playing={fplaying}
                   controls={false}
-                  light={light}
-                  loop={loop}
-                  playbackRate={playbackRate}
-                  volume={volume}
-                  muted={muted}
+                  light={flight}
+                  loop={floop}
+                  playbackRate={fplaybackRate}
+                  volume={fvolume}
+                  muted={fmuted}
                 />
               </div>
             </div>
