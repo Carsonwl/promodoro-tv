@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+
 import React, { useState, useRef } from "react";
 import ReactPlayer from "react-player/youtube";
 import  { useTimer } from 'react-timer-hook';
@@ -11,69 +12,46 @@ import { Button, FormGroup, Col, Container, Row, Form } from "react-bootstrap";
 function App() {
   const workURL = useRef("https://www.youtube.com/watch?v=jfKfPfyJRdk");
   const [workVideo, setworkVideo] = useState([workURL.current]);
-  const [workState, setworkState] = useState({
-    pip: false,
-    playing: false,
-    controls: true,
-    light: false,
-
-    muted: false,
-    played: 0,
-    duration: 0,
-    playbackRate: 1.0,
-    volume: 1,
-    loop: false,
-    seeking: false,
-  });
 
   const funURL = useRef("https://www.youtube.com/watch?v=7KDRqBpT8NA");
   const [funVideo, setfunVideo] = useState([funURL.current]);
-  const [funState, setfunState] = useState({
-    pip: false,
-    playing: false,
-    controls: true,
-    light: false,
 
-    muted: false,
-    played: 0,
-    duration: 0,
-    playbackRate: 1.0,
-    volume: 1,
-    loop: false,
-    seeking: false,
+  const [videoState, setVideoState] = useState({
+    work: {
+      url: workURL.current,
+      pip: false,
+      playing: false,
+      controls: true,
+      light: false,
+      muted: false,
+      played: 0,
+      duration: 0,
+      playbackRate: 1.0,
+      volume: 1,
+      loop: false,
+      seeking: false,
+    },
+    fun: {
+      url: funURL.current,
+      pip: false,
+      playing: false,
+      controls: true,
+      light: false,
+      muted: false,
+      played: 0,
+      duration: 0,
+      playbackRate: 1.0,
+      volume: 1,
+      loop: false,
+      seeking: false,
+    },
   });
 
-  // State for Video Player
-  const {
-    wplaying,
-    wcontrols,
-    wlight,
-
-    wmuted,
-    wloop,
-    wplaybackRate,
-    wpip,
-    wplayed,
-    wseeking,
-    wvolume,
-  } = workState;
-
-  const {
-    fplaying,
-    fcontrols,
-    flight,
-
-    fmuted,
-    floop,
-    fplaybackRate,
-    fpip,
-    fplayed,
-    fseeking,
-    fvolume,
-  } = funState;
+  const workState = videoState.work;
+  const funState = videoState.fun;
 
   // Store which video is selected with Ref
-  const playerRef = useRef(null);
+  const currentVideo = useRef("work");
   
 
   // Function causes errors for too many rerenders
@@ -99,7 +77,7 @@ function App() {
       pause,
       resume,
       restart,
-    } = useTimer({ expirytimestamp, autoStart: false, onExpire: () => {setworkState({ ...workState, playing: !workState.playing })}});
+    } = useTimer({ expirytimestamp, autoStart: false, onExpire: () => toggleVideo()});
   
     return (
       <div style={{textAlign: 'center'}}>
@@ -122,8 +100,23 @@ function App() {
   
   }
 
+  // Update the state for a specific video type (work or fun):
+  const updateVideoState = (type, newState) => {
+    setVideoState((prevState) => ({
+      ...prevState,
+      [type]: { ...prevState[type], ...newState },
+    }));
+  };
+
   function toggleVideo() {
-    setworkState({ ...workState, playing: !workState.playing });
+    if (videoState.work.playing) {
+      updateVideoState("work", { playing: false });
+      updateVideoState("fun", { playing: true });
+    }
+    else {
+      updateVideoState("fun", { playing: false });
+      updateVideoState("work", { playing: true });
+    }
   }
 
   function getURL(e) {
@@ -178,18 +171,18 @@ function App() {
               </FormGroup>
               <div className='videoContainer'>
                 <ReactPlayer
-                  ref={playerRef}
+                  
                   width='100%'
                   height='100%'
                   url={workVideo}
-                  pip={wpip}
-                  playing={wplaying}
+                  pip={videoState.work.pip}
+                  playing={videoState.work.playing}
                   controls={false}
-                  light={wlight}
-                  loop={wloop}
-                  playbackRate={wplaybackRate}
-                  volume={wvolume}
-                  muted={wmuted}
+                  light={videoState.work.light}
+                  loop={videoState.work.loop}
+                  playbackRate={videoState.work.playbackRate}
+                  volume={videoState.work.volume}
+                  muted={videoState.work.muted}
                 />
                 {/* <VideoFrame url={workVideo} /> */}
               </div>
@@ -216,18 +209,18 @@ function App() {
               </FormGroup>
               <div className='videoContainer'>
                 <ReactPlayer
-                  ref={playerRef}
+                  
                   width='100%'
                   height='100%'
                   url={funVideo}
-                  pip={fpip}
-                  playing={fplaying}
+                  pip={videoState.fun.pip}
+                  playing={videoState.fun.playing}
                   controls={false}
-                  light={flight}
-                  loop={floop}
-                  playbackRate={fplaybackRate}
-                  volume={fvolume}
-                  muted={fmuted}
+                  light={videoState.fun.light}
+                  loop={videoState.fun.loop}
+                  playbackRate={videoState.fun.playbackRate}
+                  volume={videoState.fun.volume}
+                  muted={videoState.fun.muted}
                 />
               </div>
             </div>
