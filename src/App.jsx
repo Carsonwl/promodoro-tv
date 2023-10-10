@@ -1,17 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import React from "react";
-import { useState } from "react";
-import { useRef } from "react";
-import { Button, FormGroup } from "react-bootstrap";
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Form from "react-bootstrap/Form";
+
+import React, { useState, useRef } from "react";
 import ReactPlayer from "react-player/youtube";
-import VideoFrame from "./components/VideoFrame";
+import  { useTimer } from 'react-timer-hook';
+import { Button, FormGroup, Col, Container, Row, Form } from "react-bootstrap";
 
 
+// Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
 
 function App() {
   const workURL = useRef("https://www.youtube.com/watch?v=jfKfPfyJRdk");
@@ -19,6 +15,109 @@ function App() {
 
   const funURL = useRef("https://www.youtube.com/watch?v=7KDRqBpT8NA");
   const [funVideo, setfunVideo] = useState([funURL.current]);
+
+  const [videoState, setVideoState] = useState({
+    work: {
+      url: workURL.current,
+      pip: false,
+      playing: false,
+      controls: true,
+      light: false,
+      muted: false,
+      played: 0,
+      duration: 0,
+      playbackRate: 1.0,
+      volume: 1,
+      loop: false,
+      seeking: false,
+    },
+    fun: {
+      url: funURL.current,
+      pip: false,
+      playing: false,
+      controls: true,
+      light: false,
+      muted: false,
+      played: 0,
+      duration: 0,
+      playbackRate: 1.0,
+      volume: 1,
+      loop: false,
+      seeking: false,
+    },
+  });
+
+  const workState = videoState.work;
+  const funState = videoState.fun;
+
+  // Store which video is selected with Ref
+  const currentVideo = useRef("work");
+  
+
+  // Function causes errors for too many rerenders
+  // function handlePlayPause(target) {
+  //   if (target === "workVideo") {
+  //     setworkState({ ...workState, playing: !workState.playing });
+  //   } else if (target === "funVideo") {
+  //     setfunState({ ...funState, playing: !funState.playing });
+  //   } else {
+  //     alert("Invalid Video");
+  //   }
+  // }
+
+  function VidTimer({ expirytimestamp }) {
+    const {
+      totalSeconds,
+      seconds,
+      minutes,
+      hours,
+      days,
+      isRunning,
+      start,
+      pause,
+      resume,
+      restart,
+    } = useTimer({ expirytimestamp, autoStart: false, onExpire: () => toggleVideo()});
+  
+    return (
+      <div style={{textAlign: 'center'}}>
+        <p>Pomodoro Timer</p>
+        <div style={{fontSize: '100px'}}>
+          <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+        </div>
+        <p>{isRunning ? 'Running' : 'Not running'}</p>
+        <button onClick={start}>Start</button>
+        <button onClick={pause}>Pause</button>
+        <button onClick={resume}>Resume</button>
+        <button onClick={() => {
+          // Restarts to 5 minutes timer
+          const time = new Date();
+          time.setSeconds(time.getSeconds() + 10);
+          restart(time)
+        }}>Restart</button>
+      </div>
+    );
+  
+  }
+
+  // Update the state for a specific video type (work or fun):
+  const updateVideoState = (type, newState) => {
+    setVideoState((prevState) => ({
+      ...prevState,
+      [type]: { ...prevState[type], ...newState },
+    }));
+  };
+
+  function toggleVideo() {
+    if (videoState.work.playing) {
+      updateVideoState("work", { playing: false });
+      updateVideoState("fun", { playing: true });
+    }
+    else {
+      updateVideoState("fun", { playing: false });
+      updateVideoState("work", { playing: true });
+    }
+  }
 
   function getURL(e) {
     e.preventDefault();
@@ -38,11 +137,10 @@ function App() {
       alert("Invalid Youtube URL");
     }
   }
+  // variables for first call to timer
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 100);
 
-  function playVideo() {
-    console.log("Play video");
-  
-  }
 
   return (
     <>
@@ -66,13 +164,27 @@ function App() {
                   variant='primary'
                   onClick={getURL}
                   data='workSubmit'
-                  className="m-2"
+                  className='m-2'
                 >
                   Submit
                 </Button>
               </FormGroup>
               <div className='videoContainer'>
-                <VideoFrame url={workVideo} />
+                <ReactPlayer
+                  
+                  width='100%'
+                  height='100%'
+                  url={workVideo}
+                  pip={videoState.work.pip}
+                  playing={videoState.work.playing}
+                  controls={false}
+                  light={videoState.work.light}
+                  loop={videoState.work.loop}
+                  playbackRate={videoState.work.playbackRate}
+                  volume={videoState.work.volume}
+                  muted={videoState.work.muted}
+                />
+                {/* <VideoFrame url={workVideo} /> */}
               </div>
             </div>
           </Col>
@@ -90,19 +202,38 @@ function App() {
                   variant='primary'
                   onClick={getURL}
                   data='funSubmit'
-                  className="m-2"
+                  className='m-2'
                 >
                   Submit
                 </Button>
               </FormGroup>
               <div className='videoContainer'>
-                <VideoFrame url={funVideo} />
+                <ReactPlayer
+                  
+                  width='100%'
+                  height='100%'
+                  url={funVideo}
+                  pip={videoState.fun.pip}
+                  playing={videoState.fun.playing}
+                  controls={false}
+                  light={videoState.fun.light}
+                  loop={videoState.fun.loop}
+                  playbackRate={videoState.fun.playbackRate}
+                  volume={videoState.fun.volume}
+                  muted={videoState.fun.muted}
+                />
               </div>
             </div>
           </Col>
         </Row>
         <Row>
-          <Button variant="primary" onClick={playVideo} >Start a video</Button>
+          <Button
+            variant='primary'
+            // onClick={handlePlayPause("workVideo")}
+          >
+            Start a video
+          </Button>
+          <VidTimer expirytimestamp={time} />
         </Row>
       </Container>
     </>
