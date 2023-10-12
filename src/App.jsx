@@ -17,6 +17,8 @@ function App() {
   const funURL = useRef("https://www.youtube.com/watch?v=b1kbLwvqugk");
   const [funVideo, setfunVideo] = useState([funURL.current]);
 
+  const [currentVideo, setcurrentVideo] = useState(null);
+
   const [videoState, setVideoState] = useState({
     work: {
       url: workURL.current,
@@ -51,9 +53,6 @@ function App() {
   const workState = videoState.work;
   const funState = videoState.fun;
 
-  // Store which video is selected with Ref
-  const currentVideo = useRef("work");
-
   function VidTimer({ expirytimestamp }) {
     const {
       totalSeconds,
@@ -74,7 +73,6 @@ function App() {
 
     return (
       <div style={{ textAlign: "center" }}>
-        <p>Pomodoro Timer</p>
         <div style={{ fontSize: "100px" }}>
           <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
         </div>
@@ -108,22 +106,26 @@ function App() {
     if (videoState.work.playing) {
       updateVideoState("work", { playing: false });
       updateVideoState("fun", { playing: true });
-    } else {
+    } 
+    else if (videoState.fun.playing) {
       updateVideoState("fun", { playing: false });
       updateVideoState("work", { playing: true });
     }
+    else {
+      updateVideoState("work", { playing: true });
+    }
+    
   }
 
   function getURL(e) {
     e.preventDefault();
-    console.log();
+
     // grab URL of form related to button
     let url = e.target.previousSibling.value;
 
     // grab data from button to determine if it targets work or fun video
     let targetType = e.target.attributes.data.value;
 
-    // console.log(`URL is ${url} and target is ${targetType}`)
     if (targetType === "workSubmit" && ReactPlayer.canPlay(url)) {
       setworkVideo(url);
     } else if (targetType === "funSubmit" && ReactPlayer.canPlay(url)) {
@@ -132,16 +134,10 @@ function App() {
       alert("Invalid Youtube URL");
     }
   }
+
   // variables for first call to timer
   const time = new Date();
   time.setSeconds(time.getSeconds() + 100);
-
-  // move to Slider.jsx class?
-  // function handleTimeChange(workTime, funTime) {
-  //   setworkTime(workTime);
-  //   setfunTime(funTime);
-  //   console.log(workTime, funTime);
-  // }
 
   return (
     <>
@@ -228,7 +224,7 @@ function App() {
         <Row>
           <Button
             variant='primary'
-            // onClick={handlePlayPause("workVideo")}
+            onClick={toggleVideo}
           >
             Start a video
           </Button>

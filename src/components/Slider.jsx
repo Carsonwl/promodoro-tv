@@ -22,7 +22,7 @@ class Range extends React.Component {
   render() {
     return (
       <>
-        <Form.Label>Range</Form.Label>
+        <Form.Label>Time Split</Form.Label>
         <Form.Range
           min={0}
           max={30}
