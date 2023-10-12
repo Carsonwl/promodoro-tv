@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import { useTimer } from 'react-timer-hook';
 
-function MyTimer({ countdown }) {
+function MyTimer({ workTime, funTime }) {
   const {
     totalSeconds,
     seconds,
@@ -16,11 +16,13 @@ function MyTimer({ countdown }) {
   } = useTimer({ onExpire: () => console.log('onExpire called') });
 
   useEffect(() => {
+    console.log(workTime)
     const time = new Date();
-    time.setSeconds(time.getSeconds() + countdown);
+    time.setSeconds(time.getSeconds() + workTime);
     restart(time);
     pause(); 
-  }, [countdown]);
+  }, [workTime]);
+
 
   return (
     <div style={{textAlign: 'center'}}>

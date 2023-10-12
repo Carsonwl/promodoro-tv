@@ -96,10 +96,6 @@ function App() {
     }
   }
 
-  // variables for first call to timer
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + 100);
-
   return (
     <>
       <Container fluid>
