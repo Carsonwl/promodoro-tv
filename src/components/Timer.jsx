@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import { useTimer } from 'react-timer-hook';
 
-function MyTimer({ expiryTimestamp }) {
+function MyTimer({ countdown }) {
   const {
     totalSeconds,
     seconds,
@@ -13,13 +13,14 @@ function MyTimer({ expiryTimestamp }) {
     pause,
     resume,
     restart,
-  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
+  } = useTimer({ onExpire: () => console.log('onExpire called') });
 
   useEffect(() => {
     const time = new Date();
-    time.setSeconds(time.getSeconds() + 30);
-    restart(time)
-  }, []);
+    time.setSeconds(time.getSeconds() + countdown);
+    restart(time);
+    pause(); 
+  }, [countdown]);
 
   return (
     <div style={{textAlign: 'center'}}>

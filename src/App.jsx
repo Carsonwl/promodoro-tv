@@ -54,6 +54,9 @@ function App() {
   const workState = videoState.work;
   const funState = videoState.fun;
 
+  const [workTime, setworkTime] = useState(25);
+  const [funTime, setfunTime] = useState(5);
+
   // Update the state for a specific video type (work or fun):
   const updateVideoState = (type, newState) => {
     setVideoState((prevState) => ({
@@ -63,18 +66,16 @@ function App() {
   };
 
   function toggleVideo() {
+    console.log(`Work Time is currently ${workTime} and Fun Time is currently ${funTime}`)
     if (videoState.work.playing) {
       updateVideoState("work", { playing: false });
       updateVideoState("fun", { playing: true });
-    } 
-    else if (videoState.fun.playing) {
+    } else if (videoState.fun.playing) {
       updateVideoState("fun", { playing: false });
       updateVideoState("work", { playing: true });
-    }
-    else {
+    } else {
       updateVideoState("work", { playing: true });
     }
-    
   }
 
   function getURL(e) {
@@ -191,7 +192,14 @@ function App() {
           <Timer countdown={60} />
         </Row>
         <Row>
-          <Range />
+          <Range
+            workTime={workTime}
+            funTime={funTime}
+            onTimeChange={(newWorkTime, newFunTime) => {
+              setworkTime(newWorkTime);
+              setfunTime(newFunTime);
+            }}
+          />
         </Row>
       </Container>
     </>

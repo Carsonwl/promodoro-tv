@@ -17,6 +17,7 @@ class Range extends React.Component {
       workTime: event.target.value,
       funTime: 30 - event.target.value
     });
+    this.props.onTimeChange(this.state.workTime, this.state.funTime);
   };
 
   render() {
