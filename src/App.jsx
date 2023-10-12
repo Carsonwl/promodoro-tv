@@ -1,11 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import "react-rangeslider/lib/index.css";
 
 import React, { useState, useRef } from "react";
 import ReactPlayer from "react-player/youtube";
-import  { useTimer } from 'react-timer-hook';
+import { useTimer } from "react-timer-hook";
 import { Button, FormGroup, Col, Container, Row, Form } from "react-bootstrap";
-
+import Slider from "react-rangeslider";
 
 // Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
 
@@ -13,7 +14,7 @@ function App() {
   const workURL = useRef("https://www.youtube.com/watch?v=jfKfPfyJRdk");
   const [workVideo, setworkVideo] = useState([workURL.current]);
 
-  const funURL = useRef("https://www.youtube.com/watch?v=7KDRqBpT8NA");
+  const funURL = useRef("https://www.youtube.com/watch?v=b1kbLwvqugk");
   const [funVideo, setfunVideo] = useState([funURL.current]);
 
   const [videoState, setVideoState] = useState({
@@ -50,20 +51,35 @@ function App() {
   const workState = videoState.work;
   const funState = videoState.fun;
 
+  const [workTime, setworkTime] = useState(25);
+  const [funTime, setfunTime] = useState(5);
+
   // Store which video is selected with Ref
   const currentVideo = useRef("work");
-  
 
-  // Function causes errors for too many rerenders
-  // function handlePlayPause(target) {
-  //   if (target === "workVideo") {
-  //     setworkState({ ...workState, playing: !workState.playing });
-  //   } else if (target === "funVideo") {
-  //     setfunState({ ...funState, playing: !funState.playing });
-  //   } else {
-  //     alert("Invalid Video");
-  //   }
-  // }
+  function Horizontal({ workTime, funTime, onTimeChange }) {
+    const handleChange = (value) => {
+      setworkTime(value)
+      setfunTime(30 - value)
+    
+      // Call the callback function to pass the values to the parent component
+      onTimeChange(workTime, funTime);
+    };
+
+    return (
+      <div className='slider'>
+        <Slider
+          min={1}
+          max={29}
+          value={workTime}
+          onChangeComplete={() => handleTimeChange(workTime, funTime)}
+        />
+        <div className='value'>
+          Work Time: {workTime} minutes / Fun Time: {funTime} minutes
+        </div>
+      </div>
+    );
+  }
 
   function VidTimer({ expirytimestamp }) {
     const {
@@ -77,27 +93,34 @@ function App() {
       pause,
       resume,
       restart,
-    } = useTimer({ expirytimestamp, autoStart: false, onExpire: () => toggleVideo()});
-  
+    } = useTimer({
+      expirytimestamp,
+      autoStart: false,
+      onExpire: () => toggleVideo(),
+    });
+
     return (
-      <div style={{textAlign: 'center'}}>
+      <div style={{ textAlign: "center" }}>
         <p>Pomodoro Timer</p>
-        <div style={{fontSize: '100px'}}>
+        <div style={{ fontSize: "100px" }}>
           <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
         </div>
-        <p>{isRunning ? 'Running' : 'Not running'}</p>
+        <p>{isRunning ? "Running" : "Not running"}</p>
         <button onClick={start}>Start</button>
         <button onClick={pause}>Pause</button>
         <button onClick={resume}>Resume</button>
-        <button onClick={() => {
-          // Restarts to 5 minutes timer
-          const time = new Date();
-          time.setSeconds(time.getSeconds() + 10);
-          restart(time)
-        }}>Restart</button>
+        <button
+          onClick={() => {
+            // Restarts to 5 minutes timer
+            const time = new Date();
+            time.setSeconds(time.getSeconds() + 10);
+            restart(time);
+          }}
+        >
+          Restart
+        </button>
       </div>
     );
-  
   }
 
   // Update the state for a specific video type (work or fun):
@@ -112,8 +135,7 @@ function App() {
     if (videoState.work.playing) {
       updateVideoState("work", { playing: false });
       updateVideoState("fun", { playing: true });
-    }
-    else {
+    } else {
       updateVideoState("fun", { playing: false });
       updateVideoState("work", { playing: true });
     }
@@ -121,6 +143,7 @@ function App() {
 
   function getURL(e) {
     e.preventDefault();
+    console.log();
     // grab URL of form related to button
     let url = e.target.previousSibling.value;
 
@@ -128,7 +151,6 @@ function App() {
     let targetType = e.target.attributes.data.value;
 
     // console.log(`URL is ${url} and target is ${targetType}`)
-
     if (targetType === "workSubmit" && ReactPlayer.canPlay(url)) {
       setworkVideo(url);
     } else if (targetType === "funSubmit" && ReactPlayer.canPlay(url)) {
@@ -141,6 +163,11 @@ function App() {
   const time = new Date();
   time.setSeconds(time.getSeconds() + 100);
 
+  function handleTimeChange(workTime, funTime) {
+    setworkTime(workTime);
+    setfunTime(funTime);
+    console.log(workTime, funTime);
+  }
 
   return (
     <>
@@ -171,7 +198,6 @@ function App() {
               </FormGroup>
               <div className='videoContainer'>
                 <ReactPlayer
-                  
                   width='100%'
                   height='100%'
                   url={workVideo}
@@ -209,7 +235,6 @@ function App() {
               </FormGroup>
               <div className='videoContainer'>
                 <ReactPlayer
-                  
                   width='100%'
                   height='100%'
                   url={funVideo}
@@ -234,6 +259,13 @@ function App() {
             Start a video
           </Button>
           <VidTimer expirytimestamp={time} />
+        </Row>
+        <Row>
+          <Horizontal
+            workTime={workTime}
+            funTime={funTime}
+            onTimeChange={handleTimeChange}
+          />
         </Row>
       </Container>
     </>
