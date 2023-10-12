@@ -6,7 +6,7 @@ import React, { useState, useRef } from "react";
 import ReactPlayer from "react-player/youtube";
 import { useTimer } from "react-timer-hook";
 import { Button, FormGroup, Col, Container, Row, Form } from "react-bootstrap";
-import Slider from "react-rangeslider";
+import Range from "./components/Slider";
 
 // Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
 
@@ -51,35 +51,8 @@ function App() {
   const workState = videoState.work;
   const funState = videoState.fun;
 
-  const [workTime, setworkTime] = useState(25);
-  const [funTime, setfunTime] = useState(5);
-
   // Store which video is selected with Ref
   const currentVideo = useRef("work");
-
-  function Horizontal({ workTime, funTime, onTimeChange }) {
-    const handleChange = (value) => {
-      setworkTime(value)
-      setfunTime(30 - value)
-    
-      // Call the callback function to pass the values to the parent component
-      onTimeChange(workTime, funTime);
-    };
-
-    return (
-      <div className='slider'>
-        <Slider
-          min={1}
-          max={29}
-          value={workTime}
-          onChangeComplete={() => handleTimeChange(workTime, funTime)}
-        />
-        <div className='value'>
-          Work Time: {workTime} minutes / Fun Time: {funTime} minutes
-        </div>
-      </div>
-    );
-  }
 
   function VidTimer({ expirytimestamp }) {
     const {
@@ -163,11 +136,12 @@ function App() {
   const time = new Date();
   time.setSeconds(time.getSeconds() + 100);
 
-  function handleTimeChange(workTime, funTime) {
-    setworkTime(workTime);
-    setfunTime(funTime);
-    console.log(workTime, funTime);
-  }
+  // move to Slider.jsx class?
+  // function handleTimeChange(workTime, funTime) {
+  //   setworkTime(workTime);
+  //   setfunTime(funTime);
+  //   console.log(workTime, funTime);
+  // }
 
   return (
     <>
@@ -261,11 +235,7 @@ function App() {
           <VidTimer expirytimestamp={time} />
         </Row>
         <Row>
-          <Horizontal
-            workTime={workTime}
-            funTime={funTime}
-            onTimeChange={handleTimeChange}
-          />
+          <Range />
         </Row>
       </Container>
     </>

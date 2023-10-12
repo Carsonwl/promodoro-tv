@@ -1,52 +1,38 @@
-import React, { Component, useRef } from 'react'
-import Slider from 'react-rangeslider'
+import Form from "react-bootstrap/Form";
+import React from "react";
 
-
-const workTime = { current: 25 };
-const funTime = { current: 5 };
-
-class Horizontal extends Component {
-  constructor (props, context) {
-    super(props, context)
+class Range extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      value: 25
-    }
+      value: 25,
+      workTime: props.workTime || 25,
+      funTime: props.funTime || 5,
+    };
   }
 
-  handleChangeStart = () => {
-    console.log('Change event started')
-  };
-
-  handleChange = value => {
+  handleChange = (event) => {
     this.setState({
-      value: value
-    })
-    workTime.current = value;
-    funTime.current = 30 - workTime.current;
-  
+      value: event.target.value,
+      workTime: event.target.value,
+      funTime: 30 - event.target.value
+    });
   };
 
-  handleChangeComplete = () => {
-    console.log('Change event completed')
-  };
-
-  render () {
-    const { value } = this.state
+  render() {
     return (
-      <div className='slider'>
-        <Slider
+      <>
+        <Form.Label>Range</Form.Label>
+        <Form.Range
           min={0}
           max={30}
-          value={value}
-          onChangeStart={this.handleChangeStart}
+          defaultValue={this.state.value}
           onChange={this.handleChange}
-          onChangeComplete={this.handleChangeComplete}
         />
-        <div className='value'>Work Video: {workTime.current} minutes / Fun Video: {funTime.current} minutes</div>
-      </div>
-    )
+        <h2>Focus Time: {this.state.value} | Fun Time: {this.state.funTime}</h2>
+      </>
+    );
   }
 }
 
-export default Horizontal
-
+export default Range;
