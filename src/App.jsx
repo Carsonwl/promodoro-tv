@@ -4,7 +4,8 @@ import "react-rangeslider/lib/index.css";
 
 import React, { useState, useRef } from "react";
 import ReactPlayer from "react-player/youtube";
-import { useTimer } from "react-timer-hook";
+// import { useTimer } from "react-timer-hook";
+import Timer from "./components/Timer";
 import { Button, FormGroup, Col, Container, Row, Form } from "react-bootstrap";
 import Range from "./components/Slider";
 
@@ -53,46 +54,46 @@ function App() {
   const workState = videoState.work;
   const funState = videoState.fun;
 
-  function VidTimer({ expirytimestamp }) {
-    const {
-      totalSeconds,
-      seconds,
-      minutes,
-      hours,
-      days,
-      isRunning,
-      start,
-      pause,
-      resume,
-      restart,
-    } = useTimer({
-      expirytimestamp,
-      autoStart: false,
-      onExpire: () => toggleVideo(),
-    });
+  // function VidTimer({ expirytimestamp }) {
+  //   const {
+  //     totalSeconds,
+  //     seconds,
+  //     minutes,
+  //     hours,
+  //     days,
+  //     isRunning,
+  //     start,
+  //     pause,
+  //     resume,
+  //     restart,
+  //   } = useTimer({
+  //     expirytimestamp,
+  //     autoStart: false,
+  //     onExpire: () => toggleVideo(),
+  //   });
 
-    return (
-      <div style={{ textAlign: "center" }}>
-        <div style={{ fontSize: "100px" }}>
-          <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
-        </div>
-        <p>{isRunning ? "Running" : "Not running"}</p>
-        <button onClick={start}>Start</button>
-        <button onClick={pause}>Pause</button>
-        <button onClick={resume}>Resume</button>
-        <button
-          onClick={() => {
-            // Restarts to 5 minutes timer
-            const time = new Date();
-            time.setSeconds(time.getSeconds() + 10);
-            restart(time);
-          }}
-        >
-          Restart
-        </button>
-      </div>
-    );
-  }
+  //   return (
+  //     <div style={{ textAlign: "center" }}>
+  //       <div style={{ fontSize: "100px" }}>
+  //         <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+  //       </div>
+  //       <p>{isRunning ? "Running" : "Not running"}</p>
+  //       <button onClick={start}>Start</button>
+  //       <button onClick={pause}>Pause</button>
+  //       <button onClick={resume}>Resume</button>
+  //       <button
+  //         onClick={() => {
+  //           // Restarts to 5 minutes timer
+  //           const time = new Date();
+  //           time.setSeconds(time.getSeconds() + 10);
+  //           restart(time);
+  //         }}
+  //       >
+  //         Restart
+  //       </button>
+  //     </div>
+  //   );
+  // }
 
   // Update the state for a specific video type (work or fun):
   const updateVideoState = (type, newState) => {
@@ -228,7 +229,7 @@ function App() {
           >
             Start a video
           </Button>
-          <VidTimer expirytimestamp={time} />
+          <Timer countdown={60} />
         </Row>
         <Row>
           <Range />
