@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "react-rangeslider/lib/index.css";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, createContext, useContext } from "react";
 import ReactPlayer from "react-player/youtube";
 import { useTimer } from "react-timer-hook";
 import { Button, FormGroup, Col, Container, Row, Form } from "react-bootstrap";
@@ -10,7 +10,16 @@ import Range from "./components/Slider";
 
 // Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
 
+const TimeContext = createContext();
+
 function App() {
+
+  const [timeValues, settimeValues] = useState({
+    workTime: 25,
+    funTime: 5,
+  });
+  
+
   const workURL = useRef("https://www.youtube.com/watch?v=jfKfPfyJRdk");
   const [workVideo, setworkVideo] = useState([workURL.current]);
 
@@ -145,6 +154,7 @@ function App() {
 
   return (
     <>
+      <TimeContext.Provider value={{timeValues, settimeValues}}>
       <Container fluid>
         <Row>
           <h1>Pomodoro TV</h1>
@@ -232,12 +242,13 @@ function App() {
           >
             Start a video
           </Button>
-          <VidTimer expirytimestamp={time} />
+          <VidTimer />
         </Row>
         <Row>
           <Range />
         </Row>
       </Container>
+      </TimeContext.Provider>
     </>
   );
 }

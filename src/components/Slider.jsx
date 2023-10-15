@@ -1,38 +1,30 @@
-import Form from "react-bootstrap/Form";
-import React from "react";
+import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
 
-class Range extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 25,
-      workTime: props.workTime || 25,
-      funTime: props.funTime || 5,
-    };
-  }
+function Range({ workTime: initialWorkTime, funTime: initialFunTime }) {
+  const [value, setValue] = useState(25);
+  const [workTime, setWorkTime] = useState(initialWorkTime || 25);
+  const [funTime, setFunTime] = useState(initialFunTime || 5);
 
-  handleChange = (event) => {
-    this.setState({
-      value: event.target.value,
-      workTime: event.target.value,
-      funTime: 30 - event.target.value
-    });
+  const handleChange = (event) => {
+    const newValue = event.target.value;
+    setValue(newValue);
+    setWorkTime(newValue);
+    setFunTime(30 - newValue);
   };
 
-  render() {
-    return (
-      <>
-        <Form.Label>Range</Form.Label>
-        <Form.Range
-          min={0}
-          max={30}
-          defaultValue={this.state.value}
-          onChange={this.handleChange}
-        />
-        <h2>Focus Time: {this.state.value} | Fun Time: {this.state.funTime}</h2>
-      </>
-    );
-  }
+  return (
+    <>
+      <Form.Label>Range</Form.Label>
+      <Form.Range
+        min={0}
+        max={30}
+        defaultValue={value}
+        onChange={handleChange}
+      />
+      <h2>Focus Time: {value} | Fun Time: {funTime}</h2>
+    </>
+  );
 }
 
 export default Range;
