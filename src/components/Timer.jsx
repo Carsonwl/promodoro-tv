@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useTimer } from "react-timer-hook";
 import { TimeContext, TimeContextChanger } from "./TimeContext";
 
@@ -23,8 +23,6 @@ function Timer() {
   const resume = timer.resume;
   const restart = timer.restart;
 
-
-
   return (
     <div style={{ textAlign: "center" }}>
       <p>Pomodoro Timer</p>
@@ -32,7 +30,12 @@ function Timer() {
         <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
       <p>{isRunning ? "Running" : "Not running"}</p>
-      <button onClick={start}>Start</button>
+      <button onClick={() => {
+        const time = new Date();
+        const mins = timeValues.workTime;
+        time.setMinutes(time.getMinutes() + mins);
+        start(time);
+      }}>Start</button>
       <button onClick={pause}>Pause</button>
       <button onClick={resume}>Resume</button>
       <button
