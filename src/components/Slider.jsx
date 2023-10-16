@@ -2,10 +2,8 @@ import React, { useState, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import { TimeContext, TimeContextChanger } from "./TimeContext";
 
-function Range({ workTime: initialWorkTime, funTime: initialFunTime }) {
+function Range() {
   const [value, setValue] = useState(25);
-  //   const [workTime, setWorkTime] = useState(initialWorkTime || 25);
-  //   const [funTime, setFunTime] = useState(initialFunTime || 5);
   const timeValues = useContext(TimeContext);
   const settimeValues = useContext(TimeContextChanger);
 
@@ -17,7 +15,7 @@ function Range({ workTime: initialWorkTime, funTime: initialFunTime }) {
 
   return (
     <>
-      <Form.Label>{timeValues.workTime}</Form.Label>
+      <Form.Label>Time Split</Form.Label>
       <Form.Range
         min={0}
         max={30}

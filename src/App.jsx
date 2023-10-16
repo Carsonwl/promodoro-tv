@@ -4,7 +4,7 @@ import "react-rangeslider/lib/index.css";
 
 import React, { useState, useRef, createContext, useContext } from "react";
 import ReactPlayer from "react-player/youtube";
-import { useTimer } from "react-timer-hook";
+import Timer from "./components/Timer";
 import { Button, FormGroup, Col, Container, Row, Form } from "react-bootstrap";
 import Range from "./components/Slider";
 import { TimeProvider } from "./components/TimeContext";
@@ -58,47 +58,47 @@ function App() {
   // Store which video is selected with Ref
   const currentVideo = useRef("work");
 
-  function VidTimer({ expirytimestamp }) {
-    const {
-      totalSeconds,
-      seconds,
-      minutes,
-      hours,
-      days,
-      isRunning,
-      start,
-      pause,
-      resume,
-      restart,
-    } = useTimer({
-      expirytimestamp,
-      autoStart: false,
-      onExpire: () => toggleVideo(),
-    });
+  // function VidTimer({ expirytimestamp }) {
+  //   const {
+  //     totalSeconds,
+  //     seconds,
+  //     minutes,
+  //     hours,
+  //     days,
+  //     isRunning,
+  //     start,
+  //     pause,
+  //     resume,
+  //     restart,
+  //   } = useTimer({
+  //     expirytimestamp,
+  //     autoStart: false,
+  //     onExpire: () => toggleVideo(),
+  //   });
 
-    return (
-      <div style={{ textAlign: "center" }}>
-        <p>Pomodoro Timer</p>
-        <div style={{ fontSize: "100px" }}>
-          <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
-        </div>
-        <p>{isRunning ? "Running" : "Not running"}</p>
-        <button onClick={start}>Start</button>
-        <button onClick={pause}>Pause</button>
-        <button onClick={resume}>Resume</button>
-        <button
-          onClick={() => {
-            // Restarts to 5 minutes timer
-            const time = new Date();
-            time.setSeconds(time.getSeconds() + 10);
-            restart(time);
-          }}
-        >
-          Restart
-        </button>
-      </div>
-    );
-  }
+  //   return (
+  //     <div style={{ textAlign: "center" }}>
+  //       <p>Pomodoro Timer</p>
+  //       <div style={{ fontSize: "100px" }}>
+  //         <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+  //       </div>
+  //       <p>{isRunning ? "Running" : "Not running"}</p>
+  //       <button onClick={start}>Start</button>
+  //       <button onClick={pause}>Pause</button>
+  //       <button onClick={resume}>Resume</button>
+  //       <button
+  //         onClick={() => {
+  //           // Restarts to 5 minutes timer
+  //           const time = new Date();
+  //           time.setSeconds(time.getSeconds() + 10);
+  //           restart(time);
+  //         }}
+  //       >
+  //         Restart
+  //       </button>
+  //     </div>
+  //   );
+  // }
 
   // Update the state for a specific video type (work or fun):
   const updateVideoState = (type, newState) => {
@@ -237,7 +237,7 @@ function App() {
             >
               Start a video
             </Button>
-            <VidTimer />
+            <Timer />
           </Row>
           <Row>
             <Range />
