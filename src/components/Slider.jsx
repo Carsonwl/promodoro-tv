@@ -1,38 +1,32 @@
+import React, { useState, useContext } from "react";
 import Form from "react-bootstrap/Form";
-import React from "react";
+import { TimeContext, TimeContextChanger } from "./TimeContext";
 
-class Range extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 25,
-      workTime: props.workTime || 25,
-      funTime: props.funTime || 5,
-    };
-  }
+function Range() {
+  const [value, setValue] = useState(25);
+  const timeValues = useContext(TimeContext);
+  const settimeValues = useContext(TimeContextChanger);
 
-  handleChange = (event) => {
-    this.setState({
-      value: event.target.value,
-      workTime: event.target.value,
-      funTime: 30 - event.target.value
-    });
+  const handleChange = (event) => {
+    const newValue = event.target.value;
+    setValue(newValue);
+    settimeValues({ workTime: newValue, funTime: 30 - newValue });
   };
 
-  render() {
-    return (
-      <>
-        <Form.Label>Range</Form.Label>
-        <Form.Range
-          min={0}
-          max={30}
-          defaultValue={this.state.value}
-          onChange={this.handleChange}
-        />
-        <h2>Focus Time: {this.state.value} | Fun Time: {this.state.funTime}</h2>
-      </>
-    );
-  }
+  return (
+    <>
+      <Form.Label>Time Split</Form.Label>
+      <Form.Range
+        min={0}
+        max={30}
+        defaultValue={value}
+        onChange={handleChange}
+      />
+      <h2>
+        Focus Time: {timeValues.workTime} | Fun Time: {timeValues.funTime}
+      </h2>
+    </>
+  );
 }
 
 export default Range;
