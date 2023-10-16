@@ -7,6 +7,7 @@ import ReactPlayer from "react-player/youtube";
 import { useTimer } from "react-timer-hook";
 import { Button, FormGroup, Col, Container, Row, Form } from "react-bootstrap";
 import Range from "./components/Slider";
+import { TimeProvider } from "./components/TimeContext";
 
 // Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
 
@@ -228,6 +229,7 @@ function App() {
             </div>
           </Col>
         </Row>
+        <TimeProvider>
           <Row>
             <Button
               variant='primary'
@@ -240,6 +242,7 @@ function App() {
           <Row>
             <Range />
           </Row>
+          </TimeProvider>
       </Container>
     </>
   );
