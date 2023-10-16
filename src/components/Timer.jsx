@@ -1,31 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import { TimeContext, TimeContextChanger } from "./TimeContext";
 
 function Timer() {
   const timeValues = useContext(TimeContext);
-  const settimeValues = useContext(TimeContextChanger);
-
-  const {
-    totalSeconds,
-    seconds,
-    minutes,
-    hours,
-    days,
-    isRunning,
-    start,
-    pause,
-    resume,
-    restart,
-  } = useTimer({
-    autoStart: false,
+  const timer = useTimer({
+    autoStart:false,
+    expiryTimestamp: () => {
+      const time = new Date();
+      time.setMinutes(time.getMinutes() + timeValues.workTime);
+      return time;
+    }
   });
 
-  
+  const seconds = timer.seconds;
+  const minutes = timeValues.workTime; //need to find a way to make an instance of this
+  const hours = timer.hours;
+  const days = timer.days;
+  const isRunning = timer.isRunning;
+  const start = timer.start;
+  const pause = timer.pause;
+  const resume = timer.resume;
+  const restart = timer.restart;
+
+
 
   return (
     <div style={{ textAlign: "center" }}>
-      <p>Pomodoro Timer {timeValues.workTime}</p>
+      <p>Pomodoro Timer</p>
       <div style={{ fontSize: "100px" }}>
         <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
@@ -47,4 +49,3 @@ function Timer() {
 }
 
 export default Timer;
-
