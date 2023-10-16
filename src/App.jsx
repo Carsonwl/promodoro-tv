@@ -10,15 +10,9 @@ import Range from "./components/Slider";
 
 // Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
 
-const TimeContext = createContext();
+
 
 function App() {
-
-  const [timeValues, settimeValues] = useState({
-    workTime: 25,
-    funTime: 5,
-  });
-  
 
   const workURL = useRef("https://www.youtube.com/watch?v=jfKfPfyJRdk");
   const [workVideo, setworkVideo] = useState([workURL.current]);
@@ -154,7 +148,6 @@ function App() {
 
   return (
     <>
-      <TimeContext.Provider value={{timeValues, settimeValues}}>
       <Container fluid>
         <Row>
           <h1>Pomodoro TV</h1>
@@ -235,20 +228,19 @@ function App() {
             </div>
           </Col>
         </Row>
-        <Row>
-          <Button
-            variant='primary'
-            // onClick={handlePlayPause("workVideo")}
-          >
-            Start a video
-          </Button>
-          <VidTimer />
-        </Row>
-        <Row>
-          <Range />
-        </Row>
+          <Row>
+            <Button
+              variant='primary'
+              // onClick={handlePlayPause("workVideo")}
+            >
+              Start a video
+            </Button>
+            <VidTimer />
+          </Row>
+          <Row>
+            <Range />
+          </Row>
       </Container>
-      </TimeContext.Provider>
     </>
   );
 }
