@@ -75,9 +75,13 @@ function App() {
     }
   }
 
-  function startVideo() {
-    updateVideoState("work", { playing: true });
+  function timerExpire() {
+    console.log("Expire called from App");
+    if (runTimer) {
+      toggleVideo();
+    }
   }
+
 
   function getURL(e) {
     e.preventDefault();
@@ -181,16 +185,17 @@ function App() {
         </Row>
         <TimeProvider>
           <Row>
+            {/* Dynamic button starts video or, if already running, switches video */}
             <Button
               variant='primary'
               onClick={() => {
                 setrunTimer(true);
-                startVideo();
+                toggleVideo();
               }}
             >
               {!runTimer ? "Start Video" : "Switch Video"}
             </Button>
-            {runTimer && <Timer />}
+            {runTimer && <Timer isRunning={runTimer} onExpire={timerExpire}/>}
           </Row>
           <Row>
             <Range />

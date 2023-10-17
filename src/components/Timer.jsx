@@ -2,19 +2,20 @@ import React, { useContext } from "react";
 import { useTimer } from "react-timer-hook";
 import { TimeContext } from "./TimeContext";
 
-function Timer() {
+function Timer(props) {
   const timeValues = useContext(TimeContext);
   const timer = useTimer({
-    autoStart:false,
+    autoStart:props.isRunning,
+    onExpire: props.onExpire,
     expiryTimestamp: () => {
       const time = new Date();
-      time.setMinutes(time.getMinutes() + timeValues.workTime);
+      time.setMinutes(time.getMinutes() + 3);
       return time;
     }
   });
 
   const seconds = timer.seconds;
-  const minutes = timeValues.workTime; // need to find a way to make an instance of this
+  const minutes = timer.minutes; // need to find a way to make an instance of this
   const hours = timer.hours;
   const days = timer.days;
   const isRunning = timer.isRunning;
@@ -32,7 +33,7 @@ function Timer() {
       <p>{isRunning ? "Running" : "Not running"}</p>
       <button onClick={() => {
         const time = new Date();
-        const mins = timeValues.workTime;
+        const mins = time.setMinutes(time.getMinutes() + timeValues.workTime);
         time.setMinutes(time.getMinutes() + mins);
         start(time);
       }}>Start</button>
