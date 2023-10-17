@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react"; //https://blog.logrocket
 
 // Create two context:
 // TimeContext: to query the context state
-// TimeContextChanger: to mutate the context state
+// TimeContextChanger: to update the context state
 const TimeContext = createContext(undefined);
 const TimeContextChanger = createContext(undefined);
 

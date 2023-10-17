@@ -14,7 +14,7 @@ function Timer() {
   });
 
   const seconds = timer.seconds;
-  const minutes = timeValues.workTime; //need to find a way to make an instance of this
+  const minutes = timeValues.workTime; // need to find a way to make an instance of this
   const hours = timer.hours;
   const days = timer.days;
   const isRunning = timer.isRunning;

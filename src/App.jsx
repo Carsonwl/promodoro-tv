@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "react-rangeslider/lib/index.css";
 
-import React, { useState, useRef, createContext, useContext } from "react";
+import React, { useState, useRef } from "react";
 import ReactPlayer from "react-player/youtube";
 import Timer from "./components/Timer";
 import { Button, FormGroup, Col, Container, Row, Form } from "react-bootstrap";
@@ -10,8 +10,6 @@ import Range from "./components/Slider";
 import { TimeProvider } from "./components/TimeContext";
 
 // Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
-
-
 
 function App() {
 
@@ -58,48 +56,6 @@ function App() {
   // Store which video is selected with Ref
   const currentVideo = useRef("work");
 
-  // function VidTimer({ expirytimestamp }) {
-  //   const {
-  //     totalSeconds,
-  //     seconds,
-  //     minutes,
-  //     hours,
-  //     days,
-  //     isRunning,
-  //     start,
-  //     pause,
-  //     resume,
-  //     restart,
-  //   } = useTimer({
-  //     expirytimestamp,
-  //     autoStart: false,
-  //     onExpire: () => toggleVideo(),
-  //   });
-
-  //   return (
-  //     <div style={{ textAlign: "center" }}>
-  //       <p>Pomodoro Timer</p>
-  //       <div style={{ fontSize: "100px" }}>
-  //         <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
-  //       </div>
-  //       <p>{isRunning ? "Running" : "Not running"}</p>
-  //       <button onClick={start}>Start</button>
-  //       <button onClick={pause}>Pause</button>
-  //       <button onClick={resume}>Resume</button>
-  //       <button
-  //         onClick={() => {
-  //           // Restarts to 5 minutes timer
-  //           const time = new Date();
-  //           time.setSeconds(time.getSeconds() + 10);
-  //           restart(time);
-  //         }}
-  //       >
-  //         Restart
-  //       </button>
-  //     </div>
-  //   );
-  // }
-
   // Update the state for a specific video type (work or fun):
   const updateVideoState = (type, newState) => {
     setVideoState((prevState) => ({
@@ -139,13 +95,6 @@ function App() {
   // variables for first call to timer
   const time = new Date();
   time.setSeconds(time.getSeconds() + 100);
-
-  // move to Slider.jsx class?
-  // function handleTimeChange(workTime, funTime) {
-  //   setworkTime(workTime);
-  //   setfunTime(funTime);
-  //   console.log(workTime, funTime);
-  // }
 
   return (
     <>
@@ -188,7 +137,6 @@ function App() {
                   volume={videoState.work.volume}
                   muted={videoState.work.muted}
                 />
-                {/* <VideoFrame url={workVideo} /> */}
               </div>
             </div>
           </Col>
