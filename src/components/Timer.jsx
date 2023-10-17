@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useTimer } from "react-timer-hook";
-import { TimeContext, TimeContextChanger } from "./TimeContext";
+import { TimeContext } from "./TimeContext";
 
 function Timer() {
   const timeValues = useContext(TimeContext);
