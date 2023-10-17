@@ -12,7 +12,6 @@ import { TimeProvider } from "./components/TimeContext";
 // Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
 
 function App() {
-
   const workURL = useRef("https://www.youtube.com/watch?v=jfKfPfyJRdk");
   const [workVideo, setworkVideo] = useState([workURL.current]);
 
@@ -50,11 +49,13 @@ function App() {
     },
   });
 
-  const workState = videoState.work;
-  const funState = videoState.fun;
+  const [runTimer, setrunTimer] = useState(false);
 
-  // Store which video is selected with Ref
-  const currentVideo = useRef("work");
+  // const workState = videoState.work;
+  // const funState = videoState.fun;
+
+  // // Store which video is selected with Ref
+  // const currentVideo = useRef("work");
 
   // Update the state for a specific video type (work or fun):
   const updateVideoState = (type, newState) => {
@@ -72,6 +73,10 @@ function App() {
       updateVideoState("fun", { playing: false });
       updateVideoState("work", { playing: true });
     }
+  }
+
+  function startVideo() {
+    updateVideoState("work", { playing: true });
   }
 
   function getURL(e) {
@@ -92,9 +97,6 @@ function App() {
       alert("Invalid Youtube URL");
     }
   }
-  // variables for first call to timer
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + 100);
 
   return (
     <>
@@ -181,16 +183,19 @@ function App() {
           <Row>
             <Button
               variant='primary'
-              // onClick={handlePlayPause("workVideo")}
+              onClick={() => {
+                setrunTimer(true);
+                startVideo();
+              }}
             >
-              Start a video
+              {!runTimer ? "Start Video" : "Switch Video"}
             </Button>
-            <Timer />
+            {runTimer && <Timer />}
           </Row>
           <Row>
             <Range />
           </Row>
-          </TimeProvider>
+        </TimeProvider>
       </Container>
     </>
   );
