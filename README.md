@@ -1,8 +1,12 @@
-# React + Vite
+# Promodoro TV
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Promodoro TV is a web app that uses the pomodoro time technique to alternate between youtube videos to enhance productivity.
 
-Currently, two official plugins are available:
+Paste a YouTube link into the Focus Video field and submit it to queue up the video you want while you work.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Paste a YouTube link into the Relax Video field and submit it to queue up video you want to watch when you take a break.
+
+Use the slider to determine your time split. The slider divides 30 minutes intervals into a work time and a break time.
+
+Start the timer and your Focus Video automatically begins playing. When the timer elapses, the Focus Video pauses and the Break Video plays for the duration that you set on the slider.
+
