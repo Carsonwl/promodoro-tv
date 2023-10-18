@@ -13,7 +13,7 @@ function TimeProvider({ children }) {
     const [timeValues, settimeValues] = useState({
       workTime: 25,
       funTime: 5,
-      currVideo: "work"
+      currWork: true,
     });
   
     return (

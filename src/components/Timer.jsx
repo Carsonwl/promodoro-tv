@@ -1,21 +1,31 @@
-import React, { useContext } from "react";
+
+import React, { useContext, useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
-import { TimeContext } from "./TimeContext";
+import { TimeContext, TimeContextChanger } from "./TimeContext";
 
 function Timer(props) {
   const timeValues = useContext(TimeContext);
+  const settimeValues = useContext(TimeContextChanger);
+  const [timerElapsed, settimerElapsed] = useState(false);
   const timer = useTimer({
     autoStart: props.isRunning,
     onExpire: () => {
-      toggleTimer();
+      settimerElapsed(!timerElapsed);
       props.onExpire();
     },
     expiryTimestamp: () => {
       const time = new Date();
       time.setMinutes(time.getMinutes() + timeValues.workTime);
       return time;
-    }
+    },
   });
+
+  useEffect(() => {
+    const time = new Date();
+    !timeValues.currWork ? time.setMinutes(time.getMinutes() + timeValues.workTime) : time.setMinutes(time.getMinutes() + timeValues.funTime);
+    settimeValues({ ...timeValues, currWork: !timeValues.currWork });
+    restart(time);
+  }, [timerElapsed]);
 
   const seconds = timer.seconds;
   const minutes = timer.minutes; // need to find a way to make an instance of this
@@ -27,9 +37,13 @@ function Timer(props) {
   const resume = timer.resume;
   const restart = timer.restart;
 
-  function toggleTimer() {
-    // toggle what timer is running and update context
-  }
+  // function toggleTimer() {
+  //   const time = new Date();
+  //   time.setMinutes(time.getMinutes() + timeValues.funTime);
+  //   restart(time);
+
+  //   // toggle what timer is running and update context
+  // }
 
   return (
     <div style={{ textAlign: "center" }}>
