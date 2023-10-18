@@ -5,11 +5,14 @@ import { TimeContext } from "./TimeContext";
 function Timer(props) {
   const timeValues = useContext(TimeContext);
   const timer = useTimer({
-    autoStart:props.isRunning,
-    onExpire: props.onExpire,
+    autoStart: props.isRunning,
+    onExpire: () => {
+      toggleTimer();
+      props.onExpire();
+    },
     expiryTimestamp: () => {
       const time = new Date();
-      time.setMinutes(time.getMinutes() + 3);
+      time.setMinutes(time.getMinutes() + timeValues.workTime);
       return time;
     }
   });
@@ -24,6 +27,10 @@ function Timer(props) {
   const resume = timer.resume;
   const restart = timer.restart;
 
+  function toggleTimer() {
+    // toggle what timer is running and update context
+  }
+
   return (
     <div style={{ textAlign: "center" }}>
       <p>Pomodoro Timer</p>
@@ -31,12 +38,7 @@ function Timer(props) {
         <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
       <p>{isRunning ? "Running" : "Not running"}</p>
-      <button onClick={() => {
-        const time = new Date();
-        const mins = time.setMinutes(time.getMinutes() + timeValues.workTime);
-        time.setMinutes(time.getMinutes() + mins);
-        start(time);
-      }}>Start</button>
+      <button onClick={start}>Start</button>
       <button onClick={pause}>Pause</button>
       <button onClick={resume}>Resume</button>
       <button

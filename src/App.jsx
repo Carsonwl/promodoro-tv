@@ -51,12 +51,6 @@ function App() {
 
   const [runTimer, setrunTimer] = useState(false);
 
-  // const workState = videoState.work;
-  // const funState = videoState.fun;
-
-  // // Store which video is selected with Ref
-  // const currentVideo = useRef("work");
-
   // Update the state for a specific video type (work or fun):
   const updateVideoState = (type, newState) => {
     setVideoState((prevState) => ({
