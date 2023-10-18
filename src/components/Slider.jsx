@@ -23,7 +23,7 @@ function Range() {
         onChange={handleChange}
       />
       <h2>
-        Focus Time: {timeValues.workTime} | Fun Time: {timeValues.funTime}
+        Focus Time: {timeValues.workTime} | Break Time: {timeValues.funTime}
       </h2>
     </>
   );
