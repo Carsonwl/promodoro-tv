@@ -143,7 +143,7 @@ function App() {
           <Col>
             <div className='funContainer'>
               <FormGroup>
-                <Form.Label>Fun Video: </Form.Label>
+                <Form.Label>Break Video: </Form.Label>
                 <Form.Control
                   className='funURLInput'
                   type='input'
