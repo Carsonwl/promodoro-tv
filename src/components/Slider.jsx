@@ -10,7 +10,7 @@ function Range() {
   const handleChange = (event) => {
     const newValue = event.target.value;
     setValue(newValue);
-    settimeValues({ workTime: newValue, funTime: 30 - newValue });
+    settimeValues({ workTime: newValue - 0, funTime: 30 - newValue }); // workTime - 0 insures that value is an int
   };
 
   return (

@@ -12,7 +12,8 @@ const TimeContextChanger = createContext(undefined);
 function TimeProvider({ children }) {
     const [timeValues, settimeValues] = useState({
       workTime: 25,
-      funTime: 5
+      funTime: 5,
+      currWork: true,
     });
   
     return (
