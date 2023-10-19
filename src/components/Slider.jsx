@@ -15,16 +15,16 @@ function Range() {
 
   return (
     <>
-      <Form.Label>Time Split</Form.Label>
+      <h2 className="p-2">
+        Focus Time: {timeValues.workTime} | Break Time: {timeValues.funTime}
+      </h2>
       <Form.Range
         min={0}
         max={30}
         defaultValue={value}
         onChange={handleChange}
+        className="mb-3"
       />
-      <h2>
-        Focus Time: {timeValues.workTime} | Break Time: {timeValues.funTime}
-      </h2>
     </>
   );
 }

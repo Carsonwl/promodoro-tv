@@ -3,11 +3,16 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  width:61.8%;
 }
 
 .videoContainer {
   pointer-events:none;
+  padding-top:20px;
+  padding-bottom:20px;
+  height:360px;
 }
+
 
 
 

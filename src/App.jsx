@@ -76,7 +76,6 @@ function App() {
     }
   }
 
-
   function getURL(e) {
     e.preventDefault();
     console.log();
@@ -123,21 +122,6 @@ function App() {
                   Submit
                 </Button>
               </FormGroup>
-              <div className='videoContainer'>
-                <ReactPlayer
-                  width='100%'
-                  height='100%'
-                  url={workVideo}
-                  pip={videoState.work.pip}
-                  playing={videoState.work.playing}
-                  controls={false}
-                  light={videoState.work.light}
-                  loop={videoState.work.loop}
-                  playbackRate={videoState.work.playbackRate}
-                  volume={videoState.work.volume}
-                  muted={videoState.work.muted}
-                />
-              </div>
             </div>
           </Col>
           <Col>
@@ -159,25 +143,15 @@ function App() {
                   Submit
                 </Button>
               </FormGroup>
-              <div className='videoContainer'>
-                <ReactPlayer
-                  width='100%'
-                  height='100%'
-                  url={funVideo}
-                  pip={videoState.fun.pip}
-                  playing={videoState.fun.playing}
-                  controls={false}
-                  light={videoState.fun.light}
-                  loop={videoState.fun.loop}
-                  playbackRate={videoState.fun.playbackRate}
-                  volume={videoState.fun.volume}
-                  muted={videoState.fun.muted}
-                />
-              </div>
             </div>
-          </Col>
-        </Row>
-        <TimeProvider>
+            </Col>
+            </Row>
+            <Row>
+              <TimeProvider>
+                <Range />
+              </TimeProvider>
+            </Row>
+            <TimeProvider>
           <Row>
             {/* Dynamic button starts video or, if already running, switches video */}
             <Button
@@ -189,12 +163,50 @@ function App() {
             >
               {!runTimer ? "Start Video" : "Switch Video"}
             </Button>
-            {runTimer && <Timer isRunning={runTimer} onExpire={timerExpire}/>}
-          </Row>
-          <Row>
-            <Range />
+            {runTimer && (
+              <Timer
+                isRunning={runTimer}
+                onExpire={timerExpire}
+              />
+            )}
           </Row>
         </TimeProvider>
+            <Row>
+              <Col>
+                <div className='videoContainer'>
+                  <ReactPlayer
+                    width='100%'
+                    height='100%'
+                    url={workVideo}
+                    pip={videoState.work.pip}
+                    playing={videoState.work.playing}
+                    controls={false}
+                    light={videoState.work.light}
+                    loop={videoState.work.loop}
+                    playbackRate={videoState.work.playbackRate}
+                    volume={videoState.work.volume}
+                    muted={videoState.work.muted}
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div className='videoContainer'>
+                  <ReactPlayer
+                    width='100%'
+                    height='100%'
+                    url={funVideo}
+                    pip={videoState.fun.pip}
+                    playing={videoState.fun.playing}
+                    controls={false}
+                    light={videoState.fun.light}
+                    loop={videoState.fun.loop}
+                    playbackRate={videoState.fun.playbackRate}
+                    volume={videoState.fun.volume}
+                    muted={videoState.fun.muted}
+                  />
+                </div>
+              </Col>
+            </Row>
       </Container>
     </>
   );
