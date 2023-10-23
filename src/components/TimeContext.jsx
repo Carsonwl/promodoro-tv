@@ -6,13 +6,11 @@ import React, { createContext, useState } from "react"; //https://blog.logrocket
 const TimeContext = createContext(undefined);
 const TimeContextChanger = createContext(undefined);
 
-// A "provider" is used to encapsulate only the
-// components that needs the state in this context
-
 function TimeProvider({ children }) {
     const [timeValues, settimeValues] = useState({
       workTime: 25,
       funTime: 5,
+      //* currWork determines if the video playing should be the work video or not.
       currWork: true,
     });
   

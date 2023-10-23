@@ -8,6 +8,7 @@ import Timer from "./components/Timer";
 import { Button, FormGroup, Col, Container, Row, Form } from "react-bootstrap";
 import Range from "./components/Slider";
 import { TimeProvider } from "./components/TimeContext";
+import Footer from "./components/Footer";
 
 // Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
 
@@ -18,6 +19,7 @@ function App() {
   const funURL = useRef("https://www.youtube.com/watch?v=b1kbLwvqugk");
   const [funVideo, setfunVideo] = useState([funURL.current]);
 
+  // Modify these variables to programmatically control videos
   const [videoState, setVideoState] = useState({
     work: {
       url: workURL.current,
@@ -69,13 +71,12 @@ function App() {
     }
   }
 
+  // ! runTimer variable check added here because this function causes error from too many state changes
   function timerExpire() {
-    console.log("Expire called from App");
     if (runTimer) {
       toggleVideo();
     }
   }
-
 
   function getURL(e) {
     e.preventDefault();
@@ -123,21 +124,6 @@ function App() {
                   Submit
                 </Button>
               </FormGroup>
-              <div className='videoContainer'>
-                <ReactPlayer
-                  width='100%'
-                  height='100%'
-                  url={workVideo}
-                  pip={videoState.work.pip}
-                  playing={videoState.work.playing}
-                  controls={false}
-                  light={videoState.work.light}
-                  loop={videoState.work.loop}
-                  playbackRate={videoState.work.playbackRate}
-                  volume={videoState.work.volume}
-                  muted={videoState.work.muted}
-                />
-              </div>
             </div>
           </Col>
           <Col>
@@ -159,27 +145,18 @@ function App() {
                   Submit
                 </Button>
               </FormGroup>
-              <div className='videoContainer'>
-                <ReactPlayer
-                  width='100%'
-                  height='100%'
-                  url={funVideo}
-                  pip={videoState.fun.pip}
-                  playing={videoState.fun.playing}
-                  controls={false}
-                  light={videoState.fun.light}
-                  loop={videoState.fun.loop}
-                  playbackRate={videoState.fun.playbackRate}
-                  volume={videoState.fun.volume}
-                  muted={videoState.fun.muted}
-                />
-              </div>
             </div>
-          </Col>
-        </Row>
-        <TimeProvider>
+            </Col>
+            </Row>
+            <Row>
+              <TimeProvider>
+                <Range />
+              </TimeProvider>
+            </Row>
+            <TimeProvider>
           <Row>
             {/* Dynamic button starts video or, if already running, switches video */}
+            {/* TODO: Switching video here will immediately switch timer to the appropriate time for video type */}
             <Button
               variant='primary'
               onClick={() => {
@@ -189,13 +166,53 @@ function App() {
             >
               {!runTimer ? "Start Video" : "Switch Video"}
             </Button>
-            {runTimer && <Timer isRunning={runTimer} onExpire={timerExpire}/>}
-          </Row>
-          <Row>
-            <Range />
+            {runTimer && (
+              <Timer
+                isRunning={runTimer}
+                onExpire={timerExpire}
+              />
+            )}
           </Row>
         </TimeProvider>
+            <Row>
+              <Col>
+                <div className='videoContainer'>
+                  {/* Both videos have controls set to false to prevent user from pausing or playing video without us being able to programmatically track the video state */}
+                  <ReactPlayer
+                    width='100%'
+                    height='100%'
+                    url={workVideo}
+                    pip={videoState.work.pip}
+                    playing={videoState.work.playing}
+                    controls={false}
+                    light={videoState.work.light}
+                    loop={videoState.work.loop}
+                    playbackRate={videoState.work.playbackRate}
+                    volume={videoState.work.volume}
+                    muted={videoState.work.muted}
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div className='videoContainer'>
+                  <ReactPlayer
+                    width='100%'
+                    height='100%'
+                    url={funVideo}
+                    pip={videoState.fun.pip}
+                    playing={videoState.fun.playing}
+                    controls={false}
+                    light={videoState.fun.light}
+                    loop={videoState.fun.loop}
+                    playbackRate={videoState.fun.playbackRate}
+                    volume={videoState.fun.volume}
+                    muted={videoState.fun.muted}
+                  />
+                </div>
+              </Col>
+            </Row>
       </Container>
+      <Footer />
     </>
   );
 }

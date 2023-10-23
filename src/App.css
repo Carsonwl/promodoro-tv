@@ -3,11 +3,25 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  width:61.8%;
 }
 
 .videoContainer {
   pointer-events:none;
+  padding-top:20px;
+  padding-bottom:20px;
+  height:360px;
 }
+
+.footer {
+  background-color:lightgray;
+  border-top-left-radius:5px;
+  position:fixed;
+  bottom:0px;
+  right:0px;
+  padding:5px;
+}
+
 
 
 
