@@ -6,7 +6,11 @@ import { TimeContext, TimeContextChanger } from "./TimeContext";
 function Timer(props) {
   const timeValues = useContext(TimeContext);
   const settimeValues = useContext(TimeContextChanger);
+
+  // Variable that is monitored by useEffect to trigger elapsed time
   const [timerElapsed, settimerElapsed] = useState(false);
+
+  // Establish timer, callback function to app on expire, and initiates timer with the work time
   const timer = useTimer({
     autoStart: props.isRunning,
     onExpire: () => {
@@ -20,15 +24,16 @@ function Timer(props) {
     },
   });
 
+  // Detects when time expires, toggles which video should play, and sets appropraite time value
   useEffect(() => {
     const time = new Date();
-    !timeValues.currWork ? time.setMinutes(time.getMinutes() + timeValues.workTime) : time.setMinutes(time.getMinutes() + timeValues.funTime);
+    !timeValues.currWork ? time.setMinutes(time.getMinutes() + timeValues.funTime) : time.setMinutes(time.getMinutes() + timeValues.workTime);
     settimeValues({ ...timeValues, currWork: !timeValues.currWork });
     restart(time);
   }, [timerElapsed]);
 
   const seconds = timer.seconds;
-  const minutes = timer.minutes; // need to find a way to make an instance of this
+  const minutes = timer.minutes;
   const hours = timer.hours;
   const days = timer.days;
   const isRunning = timer.isRunning;
@@ -36,14 +41,6 @@ function Timer(props) {
   const pause = timer.pause;
   const resume = timer.resume;
   const restart = timer.restart;
-
-  // function toggleTimer() {
-  //   const time = new Date();
-  //   time.setMinutes(time.getMinutes() + timeValues.funTime);
-  //   restart(time);
-
-  //   // toggle what timer is running and update context
-  // }
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -57,6 +54,7 @@ function Timer(props) {
       <button onClick={resume}>Resume</button>
       <button
         onClick={() => {
+          // ! This restart is not restarting with the appropriate time value
           const time = new Date();
           time.setMinutes(time.getMinutes() + timeValues.workTime);
           restart(time);

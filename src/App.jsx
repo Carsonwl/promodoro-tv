@@ -18,6 +18,7 @@ function App() {
   const funURL = useRef("https://www.youtube.com/watch?v=b1kbLwvqugk");
   const [funVideo, setfunVideo] = useState([funURL.current]);
 
+  // Modify these variables to programmatically control videos
   const [videoState, setVideoState] = useState({
     work: {
       url: workURL.current,
@@ -69,8 +70,8 @@ function App() {
     }
   }
 
+  // ! runTimer variable check added here because this function causes error from too many state changes
   function timerExpire() {
-    console.log("Expire called from App");
     if (runTimer) {
       toggleVideo();
     }
@@ -154,6 +155,7 @@ function App() {
             <TimeProvider>
           <Row>
             {/* Dynamic button starts video or, if already running, switches video */}
+            {/* TODO: Switching video here will immediately switch timer to the appropriate time for video type */}
             <Button
               variant='primary'
               onClick={() => {
@@ -174,6 +176,7 @@ function App() {
             <Row>
               <Col>
                 <div className='videoContainer'>
+                  {/* Both videos have controls set to false to prevent user from pausing or playing video without us being able to programmatically track the video state */}
                   <ReactPlayer
                     width='100%'
                     height='100%'
