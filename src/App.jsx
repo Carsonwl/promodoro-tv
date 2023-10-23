@@ -8,6 +8,7 @@ import Timer from "./components/Timer";
 import { Button, FormGroup, Col, Container, Row, Form } from "react-bootstrap";
 import Range from "./components/Slider";
 import { TimeProvider } from "./components/TimeContext";
+import Footer from "./components/Footer";
 
 // Playing video through button: https://github.com/vivekjne/video-player-react-youtube/blob/master/src/App.js
 
@@ -211,6 +212,7 @@ function App() {
               </Col>
             </Row>
       </Container>
+      <Footer />
     </>
   );
 }

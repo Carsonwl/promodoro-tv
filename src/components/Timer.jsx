@@ -44,7 +44,6 @@ function Timer(props) {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <p>Pomodoro Timer</p>
       <div style={{ fontSize: "100px" }}>
         <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
