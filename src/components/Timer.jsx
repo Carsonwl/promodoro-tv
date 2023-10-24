@@ -27,7 +27,7 @@ function Timer(props) {
   // Detects when time expires, toggles which video should play, and sets appropraite time value
   useEffect(() => {
     const time = new Date();
-    !timeValues.currWork ? time.setMinutes(time.getMinutes() + timeValues.funTime) : time.setMinutes(time.getMinutes() + timeValues.workTime);
+    !timeValues.currWork ? time.setMinutes(time.getMinutes() + timeValues.workTime) : time.setMinutes(time.getMinutes() + timeValues.funTime);
     settimeValues({ ...timeValues, currWork: !timeValues.currWork });
     restart(time);
   }, [timerElapsed]);

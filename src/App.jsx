@@ -146,14 +146,13 @@ function App() {
                 </Button>
               </FormGroup>
             </div>
-            </Col>
-            </Row>
-            <Row>
-              <TimeProvider>
-                <Range />
-              </TimeProvider>
-            </Row>
-            <TimeProvider>
+          </Col>
+        </Row>
+        <TimeProvider>
+          <Row>
+            <Range />
+          </Row>
+
           <Row>
             {/* Dynamic button starts video or, if already running, switches video */}
             {/* TODO: Switching video here will immediately switch timer to the appropriate time for video type */}
@@ -174,43 +173,43 @@ function App() {
             )}
           </Row>
         </TimeProvider>
-            <Row>
-              <Col>
-                <div className='videoContainer'>
-                  {/* Both videos have controls set to false to prevent user from pausing or playing video without us being able to programmatically track the video state */}
-                  <ReactPlayer
-                    width='100%'
-                    height='100%'
-                    url={workVideo}
-                    pip={videoState.work.pip}
-                    playing={videoState.work.playing}
-                    controls={false}
-                    light={videoState.work.light}
-                    loop={videoState.work.loop}
-                    playbackRate={videoState.work.playbackRate}
-                    volume={videoState.work.volume}
-                    muted={videoState.work.muted}
-                  />
-                </div>
-              </Col>
-              <Col>
-                <div className='videoContainer'>
-                  <ReactPlayer
-                    width='100%'
-                    height='100%'
-                    url={funVideo}
-                    pip={videoState.fun.pip}
-                    playing={videoState.fun.playing}
-                    controls={false}
-                    light={videoState.fun.light}
-                    loop={videoState.fun.loop}
-                    playbackRate={videoState.fun.playbackRate}
-                    volume={videoState.fun.volume}
-                    muted={videoState.fun.muted}
-                  />
-                </div>
-              </Col>
-            </Row>
+        <Row>
+          <Col>
+            <div className='videoContainer'>
+              {/* Both videos have controls set to false to prevent user from pausing or playing video without us being able to programmatically track the video state */}
+              <ReactPlayer
+                width='100%'
+                height='100%'
+                url={workVideo}
+                pip={videoState.work.pip}
+                playing={videoState.work.playing}
+                controls={false}
+                light={videoState.work.light}
+                loop={videoState.work.loop}
+                playbackRate={videoState.work.playbackRate}
+                volume={videoState.work.volume}
+                muted={videoState.work.muted}
+              />
+            </div>
+          </Col>
+          <Col>
+            <div className='videoContainer'>
+              <ReactPlayer
+                width='100%'
+                height='100%'
+                url={funVideo}
+                pip={videoState.fun.pip}
+                playing={videoState.fun.playing}
+                controls={false}
+                light={videoState.fun.light}
+                loop={videoState.fun.loop}
+                playbackRate={videoState.fun.playbackRate}
+                volume={videoState.fun.volume}
+                muted={videoState.fun.muted}
+              />
+            </div>
+          </Col>
+        </Row>
       </Container>
       <Footer />
     </>
