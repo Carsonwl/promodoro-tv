@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import { TimeContext, TimeContextChanger } from "./TimeContext";
@@ -14,20 +13,21 @@ function Timer(props) {
   const timer = useTimer({
     autoStart: props.isRunning,
     onExpire: () => {
+      console.log("onexpire called");
       settimerElapsed(!timerElapsed);
       props.onExpire();
     },
     expiryTimestamp: () => {
-      const time = new Date();
-      time.setMinutes(time.getMinutes() + timeValues.workTime);
-      return time;
+      
     },
   });
 
   // Detects when time expires, toggles which video should play, and sets appropraite time value
   useEffect(() => {
     const time = new Date();
-    !timeValues.currWork ? time.setMinutes(time.getMinutes() + timeValues.workTime) : time.setMinutes(time.getMinutes() + timeValues.funTime);
+    timeValues.currWork
+      ? time.setMinutes(time.getMinutes() + timeValues.workTime)
+      : time.setMinutes(time.getMinutes() + timeValues.funTime);
     settimeValues({ ...timeValues, currWork: !timeValues.currWork });
     restart(time);
   }, [timerElapsed]);
@@ -53,7 +53,6 @@ function Timer(props) {
       <button onClick={resume}>Resume</button>
       <button
         onClick={() => {
-          // ! This restart is not restarting with the appropriate time value
           const time = new Date();
           time.setMinutes(time.getMinutes() + timeValues.workTime);
           restart(time);

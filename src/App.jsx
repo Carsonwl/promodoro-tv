@@ -116,7 +116,7 @@ function App() {
                 />
                 <Button
                   type='submit'
-                  variant='primary'
+                  variant='cust'
                   onClick={getURL}
                   data='workSubmit'
                   className='m-2'
@@ -137,7 +137,7 @@ function App() {
                 />
                 <Button
                   type='submit'
-                  variant='primary'
+                  variant='cust'
                   onClick={getURL}
                   data='funSubmit'
                   className='m-2'
@@ -157,7 +157,7 @@ function App() {
             {/* Dynamic button starts video or, if already running, switches video */}
             {/* TODO: Switching video here will immediately switch timer to the appropriate time for video type */}
             <Button
-              variant='primary'
+              variant='cust'
               onClick={() => {
                 setrunTimer(true);
                 toggleVideo();
