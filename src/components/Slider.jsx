@@ -12,7 +12,7 @@ function Range() {
     setValue(newValue);
     // newValue - 0 insures that value is stored as an int instead of a string. 
     // TODO: add type casting to avoid messy workarounds
-    settimeValues({ workTime: newValue - 0, funTime: 30 - newValue });
+    settimeValues({ ...timeValues, workTime: newValue - 0, funTime: 30 - newValue });
   };
 
   return (

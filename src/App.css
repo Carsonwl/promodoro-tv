@@ -1,9 +1,12 @@
 #root {
   max-width: 1280px;
+  min-width:520px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
   width:61.8%;
+  background-color:#F9B572;
+  height:200%;
 }
 
 .videoContainer {
@@ -22,6 +25,32 @@
   padding:5px;
 }
 
+@media only screen and (max-width: 992px) {
+  .footer {
+    display:none;
+  }
+}
 
+.btn-cust {
+  background-color:#748E63;
+  color:white;
+}
+
+.btn-cust:hover {
+  background-color:#526944;
+  color:white;
+}
+
+.form-range::-moz-range-thumb {
+  width:1rem;
+  height:1rem;
+  -moz-appearance:none;
+  appearance:none;
+  background-color:rgb(116, 142, 99);
+  border:0;
+  border-radius:1rem;
+  -moz-transition:background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition:background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
+}
 
 

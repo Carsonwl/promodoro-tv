@@ -105,7 +105,7 @@ function App() {
           <p>Use Pomodoro Timing to alternate playing different videos.</p>
         </Row>
         <Row>
-          <Col>
+          <Col m={12}>
             <div className='workContainer'>
               <FormGroup>
                 <Form.Label>Focus Video: </Form.Label>
@@ -116,7 +116,7 @@ function App() {
                 />
                 <Button
                   type='submit'
-                  variant='primary'
+                  variant='cust'
                   onClick={getURL}
                   data='workSubmit'
                   className='m-2'
@@ -137,7 +137,7 @@ function App() {
                 />
                 <Button
                   type='submit'
-                  variant='primary'
+                  variant='cust'
                   onClick={getURL}
                   data='funSubmit'
                   className='m-2'
@@ -157,7 +157,7 @@ function App() {
             {/* Dynamic button starts video or, if already running, switches video */}
             {/* TODO: Switching video here will immediately switch timer to the appropriate time for video type */}
             <Button
-              variant='primary'
+              variant='cust'
               onClick={() => {
                 setrunTimer(true);
                 toggleVideo();
@@ -174,7 +174,7 @@ function App() {
           </Row>
         </TimeProvider>
         <Row>
-          <Col>
+          <Col md={12} lg={6}>
             <div className='videoContainer'>
               {/* Both videos have controls set to false to prevent user from pausing or playing video without us being able to programmatically track the video state */}
               <ReactPlayer
