@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import { TimeContext, TimeContextChanger } from "./TimeContext";
+import { Button } from "react-bootstrap";
 
 function Timer(props) {
   const timeValues = useContext(TimeContext);
@@ -48,10 +49,11 @@ function Timer(props) {
         <span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
       </div>
       <p>{isRunning ? "Running" : "Not running"}</p>
-      <button onClick={start}>Start</button>
-      <button onClick={pause}>Pause</button>
-      <button onClick={resume}>Resume</button>
-      <button
+      <Button variant="cust" onClick={start}>Start</Button>
+      <Button variant="cust" onClick={pause}>Pause</Button>
+      <Button variant="cust" onClick={resume}>Resume</Button>
+      <Button
+      variant="cust"
         onClick={() => {
           const time = new Date();
           time.setMinutes(time.getMinutes() + timeValues.workTime);
@@ -59,7 +61,7 @@ function Timer(props) {
         }}
       >
         Restart
-      </button>
+      </Button>
     </div>
   );
 }

@@ -105,7 +105,7 @@ function App() {
           <p>Use Pomodoro Timing to alternate playing different videos.</p>
         </Row>
         <Row>
-          <Col>
+          <Col m={12}>
             <div className='workContainer'>
               <FormGroup>
                 <Form.Label>Focus Video: </Form.Label>
@@ -174,7 +174,7 @@ function App() {
           </Row>
         </TimeProvider>
         <Row>
-          <Col>
+          <Col md={12} lg={6}>
             <div className='videoContainer'>
               {/* Both videos have controls set to false to prevent user from pausing or playing video without us being able to programmatically track the video state */}
               <ReactPlayer
