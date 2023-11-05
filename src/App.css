@@ -25,6 +25,12 @@
   padding:5px;
 }
 
+@media only screen and (max-width: 992px) {
+  .footer {
+    display:none;
+  }
+}
+
 .btn-cust {
   background-color:#748E63;
   color:white;
