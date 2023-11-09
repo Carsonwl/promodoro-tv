@@ -191,7 +191,7 @@ function App() {
 						{runTimer && (
 							<Timer
 								isRunning={runTimer}
-								onExpire={() => timerExpire}
+								onExpire={timerExpire}
 								handleToggle={() => toggleVideo}
 								handlePause={() => handlePauseandResume("pause")}
 								handleResume={() => handlePauseandResume("resume")}

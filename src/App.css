@@ -40,6 +40,10 @@ iframe {
   .footer {
     display:none;
   }
+
+  .timerButton {
+    margin-top:5px;
+  }
 }
 
 .btn-cust {

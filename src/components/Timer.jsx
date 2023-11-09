@@ -47,7 +47,10 @@ function Timer(props) {
 				<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
 			</div>
 			<Row>
-				<Col lg={4}>
+				<Col
+					sm={12}
+					lg={6}
+				>
 					{isRunning ? (
 						<Button
 							variant='cust'
@@ -72,7 +75,10 @@ function Timer(props) {
 						</Button>
 					)}
 				</Col>
-				<Col lg={4}>
+				{/* <Col
+					sm={12}
+					lg={4}
+				>
 					<Button
 						variant='cust'
 						className='timerButton'
@@ -80,8 +86,11 @@ function Timer(props) {
 					>
 						Toggle Video
 					</Button>
-				</Col>
-				<Col lg={4}>
+				</Col> */}
+				<Col
+					sm={12}
+					lg={6}
+				>
 					<Button
 						variant='cust'
 						className='timerButton'
