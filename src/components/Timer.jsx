@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import { TimeContext, TimeContextChanger } from "./TimeContext";
-import { Button } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 
 function Timer(props) {
 	const timeValues = useContext(TimeContext);
@@ -21,7 +21,7 @@ function Timer(props) {
 		expiryTimestamp: () => {},
 	});
 
-	// Detects when time expires, toggles which video should play, and sets appropraite time value
+	// Detects when time expires, toggles which video should play, and sets appropriate time value
 	useEffect(() => {
 		const time = new Date();
 		timeValues.currWork
@@ -46,35 +46,64 @@ function Timer(props) {
 			<div style={{ fontSize: "100px" }}>
 				<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
 			</div>
-			<p>{isRunning ? "Running" : "Not running"}</p>
-			<Button
-				variant='cust'
-				onClick={start}
-			>
-				Start
-			</Button>
-			<Button
-				variant='cust'
-				onClick={pause}
-			>
-				Pause
-			</Button>
-			<Button
-				variant='cust'
-				onClick={resume}
-			>
-				Resume
-			</Button>
-			<Button
-				variant='cust'
-				onClick={() => {
-					const time = new Date();
-					time.setMinutes(time.getMinutes() + timeValues.workTime);
-					restart(time);
-				}}
-			>
-				Restart
-			</Button>
+			<Row>
+				<Col
+					sm={12}
+					lg={6}
+				>
+					{isRunning ? (
+						<Button
+							variant='cust'
+							onClick={() => {
+								pause();
+								props.handlePause();
+							}}
+							className='timerButton'
+						>
+							Pause
+						</Button>
+					) : (
+						<Button
+							variant='cust'
+							onClick={() => {
+								resume();
+								props.handleResume();
+							}}
+							className='timerButton'
+						>
+							Resume
+						</Button>
+					)}
+				</Col>
+				{/* <Col
+					sm={12}
+					lg={4}
+				>
+					<Button
+						variant='cust'
+						className='timerButton'
+						onClick={props.handleToggle()}
+					>
+						Toggle Video
+					</Button>
+				</Col> */}
+				<Col
+					sm={12}
+					lg={6}
+				>
+					<Button
+						variant='cust'
+						className='timerButton'
+						onClick={() => {
+							const time = new Date();
+							time.setMinutes(time.getMinutes() + timeValues.workTime);
+							restart(time);
+						}}
+					>
+						Restart
+					</Button>
+				</Col>
+			</Row>
 		</div>
 	);
 }
