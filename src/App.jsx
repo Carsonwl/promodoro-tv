@@ -101,7 +101,7 @@ function App() {
 		<>
 			<Container fluid>
 				<Row>
-					<h1>Pomodoro TV</h1>
+					<h1>Promodoro TV</h1>
 					<p>Use Pomodoro Timing to alternate playing different videos.</p>
 				</Row>
 				<Row>
