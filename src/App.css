@@ -40,11 +40,19 @@ iframe {
   .footer {
     display:none;
   }
+
+  .timerButton {
+    margin-top:5px;
+  }
 }
 
 .btn-cust {
   background-color:var(--secondary);
   color:white;
+}
+
+.timerButton {
+  width:100%;
 }
 
 .btn-cust:hover {
