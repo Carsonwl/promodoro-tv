@@ -19,6 +19,8 @@ function App() {
 	const funURL = useRef("https://www.youtube.com/watch?v=b1kbLwvqugk");
 	const [funVideo, setfunVideo] = useState([funURL.current]);
 
+	const currVideo = useRef(null);
+
 	// Modify these variables to programmatically control videos
 	const [videoState, setVideoState] = useState({
 		work: {
@@ -65,9 +67,30 @@ function App() {
 		if (videoState.work.playing) {
 			updateVideoState("work", { playing: false });
 			updateVideoState("fun", { playing: true });
+			currVideo.current = "fun";
 		} else {
 			updateVideoState("fun", { playing: false });
 			updateVideoState("work", { playing: true });
+			currVideo.current = "work";
+		}
+	}
+
+	// Detects which video is playing when the pause button is clicked and stores that in currVideo.current. When resume is clicked, currVideo.current determines which video resumes
+	function handlePauseandResume(action) {
+		if (action === "pause") {
+			videoState.work.playing
+				? (currVideo.current = "work")
+				: (currVideo.current = "fun");
+			updateVideoState("work", { playing: false });
+			updateVideoState("fun", { playing: false });
+			console.log("calling pause");
+		} else if (action === "resume") {
+			console.log("Calling resume");
+			if (currVideo.current === "work") {
+				updateVideoState("work", { playing: true });
+			} else if (currVideo.current === "fun") {
+				updateVideoState("fun", { playing: true });
+			}
 		}
 	}
 
@@ -168,7 +191,10 @@ function App() {
 						{runTimer && (
 							<Timer
 								isRunning={runTimer}
-								onExpire={timerExpire}
+								onExpire={() => timerExpire}
+								handleToggle={() => toggleVideo}
+								handlePause={() => handlePauseandResume("pause")}
+								handleResume={() => handlePauseandResume("resume")}
 							/>
 						)}
 					</Row>

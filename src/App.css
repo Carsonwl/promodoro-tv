@@ -47,6 +47,10 @@ iframe {
   color:white;
 }
 
+.timerButton {
+  width:100%;
+}
+
 .btn-cust:hover {
   background-color:var(--secondary-hover);
   color:white;
